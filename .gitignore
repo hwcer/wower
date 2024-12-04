@@ -1,0 +1,14 @@
+.idea
+.vscode
+*.iml
+*.out
+*.pid
+bin
+win
+pid
+logs
+private.toml
+
+
+
+
