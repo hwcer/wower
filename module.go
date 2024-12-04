@@ -1,19 +1,19 @@
-package kernel
+package wower
 
 import (
 	"errors"
 	"fmt"
 	"github.com/hwcer/cosgo"
 	"github.com/hwcer/cosgo/logger"
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/utils"
 	"github.com/hwcer/cosrpc/xshare"
-	_ "github.com/hwcer/yyds/kernel/config"
-	_ "github.com/hwcer/yyds/kernel/context"
-	_ "github.com/hwcer/yyds/kernel/itypes"
-	"github.com/hwcer/yyds/kernel/model"
-	"github.com/hwcer/yyds/kernel/players"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/options"
+	_ "github.com/hwcer/yyds/wower/config"
+	_ "github.com/hwcer/yyds/wower/context"
+	_ "github.com/hwcer/yyds/wower/itypes"
+	"github.com/hwcer/yyds/wower/model"
+	"github.com/hwcer/yyds/wower/players"
+	"github.com/hwcer/yyds/wower/share"
 	"strconv"
 	"strings"
 )

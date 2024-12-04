@@ -1,4 +1,4 @@
-package kernel
+package wower
 
 import (
 	"github.com/hwcer/cosgo/logger"

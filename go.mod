@@ -1,4 +1,4 @@
-module server
+module github.com/hwcer/wower
 
 go 1.23.0
 
