@@ -1,4 +1,4 @@
-package itype
+package itypes
 
 import (
 	"errors"
@@ -7,11 +7,11 @@ import (
 	"github.com/hwcer/wower/model"
 )
 
-type ITypeUnique func(u *updater.Updater, iid int32) (string, error)
-type ITypeCreator func(u *updater.Updater, iid int32, val int64) (r any, err error)
-type ITypeListener func(u *updater.Updater, op *operator.Operator)
+type Unique func(u *updater.Updater, iid int32) (string, error)
+type Creator func(u *updater.Updater, iid int32, val int64) (r any, err error)
+type Listener func(u *updater.Updater, op *operator.Operator)
 
-func NewIType(id int32, l ...ITypeListener) *IType {
+func NewIType(id int32, l ...Listener) *IType {
 	it := &IType{id: id, stacked: true}
 	if len(l) > 0 {
 		it.listener = l[0]
@@ -21,10 +21,10 @@ func NewIType(id int32, l ...ITypeListener) *IType {
 
 type IType struct {
 	id       int32
-	unique   ITypeUnique
+	unique   Unique
 	stacked  bool
-	creator  ITypeCreator
-	listener ITypeListener
+	creator  Creator
+	listener Listener
 }
 
 func (this *IType) ID() int32 {
@@ -64,16 +64,16 @@ func (this *IType) Listener(u *updater.Updater, op *operator.Operator) {
 	}
 }
 
-func (this *IType) SetUnique(unique ITypeUnique) {
+func (this *IType) SetUnique(unique Unique) {
 	this.unique = unique
 }
 func (this *IType) SetStacked(stacked bool) {
 	this.stacked = stacked
 }
-func (this *IType) SetCreator(creator ITypeCreator) {
+func (this *IType) SetCreator(creator Creator) {
 	this.creator = creator
 }
 
-func (this *IType) SetListener(l ITypeListener) {
+func (this *IType) SetListener(l Listener) {
 	this.listener = l
 }

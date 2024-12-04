@@ -8,8 +8,8 @@ import (
 	"github.com/hwcer/cosmo"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/share"
 )
 
 const BaseSize = 32
@@ -181,7 +181,7 @@ func (this *Model) Set(k string, v any) (any, bool) {
 	return v, true
 }
 func (this *Model) IType(id int32) int32 {
-	return config.GetIType(id)
+	return share.Config.ITypes.GetIType(id)
 }
 func (this *Model) SetOnInsert() (r map[string]interface{}, err error) {
 	r = make(map[string]any)

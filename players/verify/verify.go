@@ -35,7 +35,7 @@ func (v *Verify) Target(target Target) {
 	case ConditionData:
 		v.u.Select(target.GetKey())
 	case ConditionEvents:
-		//handle := v.u.Handle(model.UpdaterTaskName)
+		//handle := v.u.HandleDefault(model.UpdaterTaskName)
 		//handle.Select(target.GetId())
 	case ConditionMethod:
 		if i := GetMethod(target.GetKey()); i != nil {

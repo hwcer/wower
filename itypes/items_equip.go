@@ -1,10 +1,10 @@
-package itype
+package itypes
 
 import (
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 )
 
-var Equip = NewItemsIType(config.ITypeEquip)
+var Equip = NewItemsIType(options.ITypeEquip)
 
 func init() {
 	Equip.SetStacked(false)

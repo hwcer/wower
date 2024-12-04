@@ -26,9 +26,9 @@ func Initialize() error {
 var Service = map[string]string{}
 
 var Options = &struct {
+	Data    string //静态数据地址
 	Debug   bool
 	Appid   string
-	Config  string //静态数据地址
 	Master  string
 	Secret  string //秘钥,必须8位
 	Verify  int8   `json:"verify"` //平台验证方式,0-不验证，1-仅仅验证签名，2-严格模式

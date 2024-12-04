@@ -1,4 +1,4 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/updater"

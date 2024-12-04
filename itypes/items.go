@@ -1,14 +1,14 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/cosgo/values"
 	"github.com/hwcer/updater"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/options"
 )
 
-var Items = NewItemsIType(config.ITypeItems)
-var Viper = NewItemsIType(config.ITypeViper)
+var Items = NewItemsIType(options.ITypeItems)
+var Viper = NewItemsIType(options.ITypeViper)
 
 //func init() {
 //	im := &model.Items{}

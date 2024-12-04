@@ -1,4 +1,4 @@
-package itype
+package itypes
 
 const (
 	ItemsAttachTypeTicket = "ts"  //门票上次结算时间

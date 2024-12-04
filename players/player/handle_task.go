@@ -1,14 +1,13 @@
 package player
 
 import (
-	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/players/emitter"
 	"github.com/hwcer/wower/players/verify"
-	"github.com/hwcer/wower/share"
 )
 
 const taskListenerKey = "task_listener_key"
@@ -18,7 +17,7 @@ func init() {
 }
 
 func onTaskLoader(u *updater.Updater) {
-	doc := u.Handle(config.ITypeTask).(*updater.Collection)
+	doc := u.Handle(options.ITypeTask).(*updater.Collection)
 	if !doc.Loader() {
 		return
 	}
@@ -55,7 +54,7 @@ func (tt *TaskTarget) GetCondition() int32 {
 }
 
 func NewTask(p *Player) *Task {
-	doc := p.Collection(config.ITypeTask)
+	doc := p.Collection(options.ITypeTask)
 	r := &Task{Collection: doc, player: p}
 	r.listeners = map[int32]struct{}{}
 	return r
@@ -81,14 +80,10 @@ func (this *Task) Get(id int32) (r *model.Task) {
 }
 
 func (this *Task) listener(id int32) {
-	if share.Configs.Task == nil {
-		logger.Alert("share.Configs.Task is nil")
-		return
-	}
 	if _, ok := this.listeners[id]; ok {
 		return
 	}
-	c := share.Configs.Task(id)
+	c := itypes.Task.GetConfig(id)
 	if c == nil || c.GetCondition() != verify.ConditionEvents {
 		return
 	}
@@ -100,7 +95,7 @@ func (this *Task) listener(id int32) {
 
 func (this *Task) handle(l *emitter.Listener, val int32) (r bool) {
 	id := l.Attach.GetInt32(taskListenerKey)
-	c := share.Configs.Task(id)
+	c := itypes.Task.GetConfig(id)
 	if c == nil {
 		return false
 	}

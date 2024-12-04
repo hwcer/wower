@@ -58,10 +58,10 @@ func verify(c *Context, handle func() error) (err error) {
 	}
 
 	l := MethodGrade(path)
-	if l == options.ApisTypeNone {
+	if l == share.AuthorizesTypeNone {
 		return handle()
 	}
-	if l == options.ApisTypeOAuth {
+	if l == share.AuthorizesTypeOAuth {
 		if guid := c.GetMetadata(options.ServiceMetadataGUID); guid == "" {
 			return values.Errorf(0, "guid empty")
 		} else {

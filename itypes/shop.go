@@ -1,12 +1,12 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/updater"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/options"
 )
 
-var Shop = NewIType(config.ITypeShop)
+var Shop = NewIType(options.ITypeShop)
 
 func init() {
 	Shop.SetCreator(shopCreator)

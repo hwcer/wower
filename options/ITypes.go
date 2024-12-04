@@ -1,4 +1,4 @@
-package config
+package options
 
 const (
 	ITypeRole       int32 = 10

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/options"
 )
 
 func init() {
@@ -14,7 +14,7 @@ func init() {
 }
 
 func onItemsLoader(u *updater.Updater) {
-	doc := u.Handle(config.ITypeItems).(*updater.Collection)
+	doc := u.Handle(options.ITypeItems).(*updater.Collection)
 	if !doc.Loader() {
 		return
 	}
@@ -40,7 +40,7 @@ func (this *itemsIndexesMonitor) Delete(doc *dataset.Document) {
 }
 
 func NewItems(p *Player) *Items {
-	doc := p.Collection(config.ITypeItems)
+	doc := p.Collection(options.ITypeItems)
 	r := &Items{Collection: doc, player: p}
 	r.indexes = make(map[int32]itemsIndexes)
 	return r
@@ -90,7 +90,7 @@ func (this *Items) GetOrCreate(id int32, autoInsertDB bool) (r *model.Items, exi
 		exist = true
 		r = i.(*model.Items)
 	} else {
-		r, _ = itype.Items.Create(this.player.Updater, id, 0)
+		r, _ = itypes.Items.Create(this.player.Updater, id, 0)
 		if autoInsertDB {
 			_ = this.Collection.New(r)
 		}

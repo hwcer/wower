@@ -106,7 +106,7 @@ func (this *Players) Load(uid uint64, init bool, handle player.Handle) (err erro
 	return err
 }
 
-//func (this *Players) Login(uid uint64, conn net.Conn, handle player.Handle) (err error) {
+//func (this *Players) Login(uid uint64, conn net.Conn, handle player.HandleDefault) (err error) {
 //	args := playerAwaitArgs{}
 //	args[playerAwaitArgsUid] = uid
 //	args[playerAwaitArgsInit] = true

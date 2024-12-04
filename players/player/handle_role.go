@@ -3,7 +3,7 @@ package player
 import (
 	"fmt"
 	"github.com/hwcer/updater"
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 	"strings"
 )
 
@@ -12,7 +12,7 @@ type Role struct {
 }
 
 func NewRole(p *Player) *Role {
-	doc := p.Document(config.ITypeRole)
+	doc := p.Document(options.ITypeRole)
 	r := &Role{Document: doc}
 	return r
 }

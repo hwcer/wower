@@ -1,13 +1,13 @@
-package itype
+package itypes
 
 import (
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 )
 
-var Record = NewIType(config.ITypeRecord)
+var Record = NewIType(options.ITypeRecord)
 
-//func init() {
-//	if err := updater.Register(updater.ParserTypeValues, updater.RAMTypeAlways, &model.Record{}, Record); err != nil {
-//		logger.Panic(err)
-//	}
-//}
+func init() {
+	//		if err := updater.Register(updater.ParserTypeValues, updater.RAMTypeAlways, &model.Record{}, Record); err != nil {
+	//			logger.Panic(err)
+	//		}
+}

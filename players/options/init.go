@@ -3,13 +3,13 @@ package options
 import (
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/share"
 )
 
 func init() {
-	updater.Config.IMax = config.GetIMax
-	updater.Config.IType = config.GetIType
+	updater.Config.IMax = share.Config.ITypes.GetIMax
+	updater.Config.IType = share.Config.ITypes.GetIType
 	updater.Config.ParseId = ParseId
 }
 

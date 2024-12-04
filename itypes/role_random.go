@@ -1,14 +1,15 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/share"
 )
 
-var ItemsGroup = &itemsRandom{IType: IType{id: config.ITypeItemGroup}}
-var ItemsPacks = &itemsRandom{IType: IType{id: config.ITypeItemPacks}}
+var ItemsGroup = &itemsRandom{IType: IType{id: options.ITypeItemGroup}}
+var ItemsPacks = &itemsRandom{IType: IType{id: options.ITypeItemPacks}}
 
 type itemsRandom struct {
 	IType
@@ -54,10 +55,10 @@ func (this *itemsRandom) switchParser(u *updater.Updater, k, v int32, r map[int3
 	if n > 100 {
 		logger.Alert("IType itemsRandom endless loop:%v", k)
 	}
-	switch config.GetIType(k) {
-	case config.ITypeItemPacks:
+	switch share.Config.ITypes.GetIType(k) {
+	case options.ITypeItemPacks:
 		ItemsPacks.doRandom(u, k, v, r, n)
-	case config.ITypeItemGroup:
+	case options.ITypeItemGroup:
 		ItemsGroup.doRandom(u, k, v, r, n)
 	default:
 		r[k] += v

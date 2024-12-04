@@ -3,6 +3,7 @@ package context
 import (
 	"github.com/hwcer/cosgo/registry"
 	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/share"
 	"strings"
 )
 
@@ -23,5 +24,5 @@ func MethodGrade(serviceMethod string) int8 {
 		routePrefix := registry.Join(options.Gate.Prefix)
 		serviceMethod = strings.TrimPrefix(serviceMethod, routePrefix)
 	}
-	return options.Apis.Get(serviceMethod)
+	return share.Authorizes.Get(serviceMethod)
 }

@@ -1,10 +1,10 @@
-package itype
+package itypes
 
 import (
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 )
 
-var Daily = NewIType(config.ITypeDaily)
+var Daily = NewIType(options.ITypeDaily)
 
 //func init() {
 //	im := &model.Daily{}

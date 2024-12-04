@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/share"
 )
 
@@ -109,7 +109,7 @@ func (r *Role) New(u *updater.Updater) any {
 	return NewRole()
 }
 func (r *Role) IType(iid int32) int32 {
-	return config.ITypeRole
+	return options.ITypeRole
 }
 
 func (r *Role) Field(u *updater.Updater, iid int32) (string, error) {

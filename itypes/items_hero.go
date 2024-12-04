@@ -1,7 +1,7 @@
-package itype
+package itypes
 
 import (
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 )
 
-var Hero = NewItemsIType(config.ITypeHero)
+var Hero = NewItemsIType(options.ITypeHero)

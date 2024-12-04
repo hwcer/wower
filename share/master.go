@@ -19,9 +19,9 @@ const (
 	MasterApiTypeOrderCreate  = "/order/create"
 	MasterApiTypeOrderRefresh = "/order/refresh" //重新拉起之前放弃的订单
 	MasterApiTypeOrderSubmit  = "/order/submit"
-	MasterApiTypeConfigInfo   = "/config/info"
+	MasterApiTypeConfigInfo   = "/CS/info"
 
-	MasterApiTypeConfigCreate = "/config/create"
+	MasterApiTypeConfigCreate = "/CS/create"
 	MasterApiTypeAccessUpdate = "/access/update"
 )
 

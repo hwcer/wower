@@ -1,4 +1,4 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/cosgo/logger"
@@ -6,9 +6,8 @@ import (
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/model"
-	"github.com/hwcer/wower/share"
+	"github.com/hwcer/wower/options"
 )
 
 const (
@@ -21,21 +20,29 @@ type cycleHandle func(dateTime *times.Times, powerTime int64, powerMax int64, cy
 
 var cycleHandleDict = make(map[int32]cycleHandle)
 
+type TicketConfig interface {
+	GetDot() []int32
+	GetLimit() []int32
+	GetCycle() []int32
+}
+
 func init() {
-	Ticket.itemsIType = NewItemsIType(config.ITypeTicket)
+	Ticket.itemsIType = NewItemsIType(options.ITypeTicket)
+	Ticket.GetConfig = func(i int32) TicketConfig {
+		logger.Alert("请设置 itypes.Ticket.GetConfig")
+		return nil
+	}
+
 	cycleHandleDict[1] = cycleHandleType1
 	cycleHandleDict[2] = cycleHandleType2
 }
 
 type TicketIType struct {
 	*itemsIType
+	GetConfig func(int32) TicketConfig
 }
 
 func (this *TicketIType) Listener(u *updater.Updater, op *operator.Operator) {
-	if share.Configs.Ticket == nil {
-		logger.Alert("ITypes.Ticket GetConfig is nil")
-		return
-	}
 	this.Settlement(u, op.IID)
 }
 
@@ -43,7 +50,7 @@ func (this *TicketIType) Listener(u *updater.Updater, op *operator.Operator) {
 func (this *TicketIType) Settlement(u *updater.Updater, iid ...int32) {
 	plug := u.Events.LoadOrCreate(ticketPlugName, this.createTicketPlug).(*ticketPlug)
 	for _, id := range iid {
-		c := share.Configs.Ticket(id)
+		c := this.GetConfig(id)
 		if c == nil {
 			continue
 		}
@@ -88,7 +95,7 @@ func (this *ticketPlug) checkAllTicket(u *updater.Updater) bool {
 }
 
 func (this *ticketPlug) powerMax(u *updater.Updater, iid int32) int64 {
-	c := share.Configs.Ticket(iid)
+	c := Ticket.GetConfig(iid)
 	limit := c.GetLimit()
 	powerMax := int64(limit[2])
 	if limit[0] > 0 && limit[1] > 0 {
@@ -113,7 +120,7 @@ func (this *ticketPlug) newTicket(u *updater.Updater, iid int32) {
 }
 
 func (this *ticketPlug) sumTicket(u *updater.Updater, data *model.Items) {
-	c := share.Configs.Ticket(data.IID)
+	c := Ticket.GetConfig(data.IID)
 	t := times.New(u.Time)
 	nowTime := t.Now().Unix()
 	powerMax := this.powerMax(u, data.IID)

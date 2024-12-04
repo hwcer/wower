@@ -20,7 +20,7 @@ var (
 	ErrPlayerMax        = values.Errorf(105, "player max")         //房间已满
 	ErrDataExists       = values.Errorf(106, "data exists")        //数据已经存在
 
-	ErrConfigEmpty   = values.Errorf(200, "config empty")    //配置不存在
+	ErrConfigEmpty   = values.Errorf(200, "CS empty")        //配置不存在
 	ErrItemNotEnough = values.Errorf(202, "item not enough") //道具,材料不足
 	ErrTargetLimit   = values.Errorf(203, "target limit")    //任务目标未达成
 	ErrPreTaskLimit  = values.Errorf(204, "pre task limit")  //前置任务没完成

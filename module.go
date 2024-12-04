@@ -7,7 +7,6 @@ import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/utils"
 	"github.com/hwcer/cosrpc/xshare"
-	_ "github.com/hwcer/wower/config"
 	_ "github.com/hwcer/wower/context"
 	_ "github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/model"

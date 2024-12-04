@@ -2,13 +2,12 @@ package player
 
 import (
 	"fmt"
-	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/random"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
+	"github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/players/emitter"
-	"github.com/hwcer/wower/share"
 	"net"
 	"reflect"
 	"sync/atomic"
@@ -65,11 +64,7 @@ func (p *Player) RemoteAddr() (r net.Addr) {
 }
 
 func (p *Player) Emit(t int32, v int32, args ...int32) {
-	if share.Configs.Emitter == nil {
-		logger.Alert("share.Configs.Emitter is nil")
-		return
-	}
-	c := share.Configs.Emitter(t)
+	c := itypes.Emitter.GetConfig(t)
 	if c == nil {
 		return
 	}

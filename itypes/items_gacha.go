@@ -1,10 +1,10 @@
-package itype
+package itypes
 
 import (
-	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 )
 
-var Gacha = NewItemsIType(config.ITypeGacha)
+var Gacha = NewItemsIType(options.ITypeGacha)
 
 func init() {
 	Gacha.SetStacked(true)

@@ -41,4 +41,12 @@ func init() {
 	if err := updater.Register(updater.ParserTypeCollection, updater.RAMTypeMaybe, &model.Task{}, itype.Task); err != nil {
 		logger.Panic(err)
 	}
+	//
+	//升级判定
+	itypes.Role.Upgrade = roleUpgradeHandle{}
+	//设置掉落概率表概率
+	itypes.ItemsGroup.Random = parseItemGroup
+	itypes.ItemsPacks.Random = parseItemPacks
+	//设置获取配置
+
 }

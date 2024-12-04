@@ -1,13 +1,13 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/updater"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/options"
 )
 
-var Active = NewIType(config.ITypeActive)
-var Config = NewIType(config.ITypeConfig) //后台配置的活动
+var Active = NewIType(options.ITypeActive)
+var Config = NewIType(options.ITypeConfig) //后台配置的活动
 
 func init() {
 	Active.SetCreator(activeCreator)

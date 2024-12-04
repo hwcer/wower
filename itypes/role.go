@@ -1,11 +1,10 @@
-package itype
+package itypes
 
 import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/wower/config"
 	"github.com/hwcer/wower/model"
 	"github.com/hwcer/wower/options"
 )
@@ -14,7 +13,7 @@ const (
 	RoleModelPlug = "_model_role_plug"
 )
 
-var Role = &roleIType{IType: NewIType(config.ITypeRole)}
+var Role = &roleIType{IType: NewIType(options.ITypeRole)}
 
 //func init() {
 //	it := []updater.IType{Role, ItemsGroup, ItemsPacks}
@@ -82,7 +81,7 @@ func (this RoleMiddleware) upgrade(u *updater.Updater) bool {
 	lv := int32(u.Val("lv"))
 	exp := u.Val("exp")
 	if newLv := Role.Upgrade.Submit(u, lv, exp); newLv > 0 && newLv != lv {
-		role := u.Handle(config.ITypeRole)
+		role := u.Handle(options.ITypeRole)
 		role.Add("lv", newLv-lv)
 	}
 	return false
