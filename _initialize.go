@@ -3,8 +3,8 @@ package wower
 import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/updater"
-	"github.com/hwcer/yyds/kernel/itype"
-	"github.com/hwcer/yyds/kernel/model"
+	"github.com/hwcer/wower/itype"
+	"github.com/hwcer/wower/model"
 )
 
 func init() {

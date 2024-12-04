@@ -1,9 +1,9 @@
 package share
 
 import (
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/registry"
 	"github.com/hwcer/cosrpc/xshare"
+	"github.com/hwcer/wower/options"
 	"strings"
 )
 

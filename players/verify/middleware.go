@@ -2,11 +2,11 @@ package verify
 
 import "github.com/hwcer/updater"
 
-type plugs struct {
+type middleware struct {
 	dict []Target
 }
 
-func (this *plugs) Emit(u *updater.Updater, t updater.EventType) bool {
+func (this *middleware) Emit(u *updater.Updater, t updater.EventType) bool {
 	if t != updater.OnPreVerify {
 		return true
 	}

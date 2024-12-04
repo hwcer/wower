@@ -3,8 +3,8 @@ package options
 import (
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/model"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/model"
 )
 
 func init() {

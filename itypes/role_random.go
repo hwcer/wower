@@ -4,7 +4,7 @@ import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/yyds/kernel/config"
+	"github.com/hwcer/wower/config"
 )
 
 var ItemsGroup = &itemsRandom{IType: IType{id: config.ITypeItemGroup}}

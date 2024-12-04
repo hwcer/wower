@@ -2,13 +2,13 @@ package context
 
 import (
 	"github.com/hwcer/cosgo"
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/registry"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/values"
-	"github.com/hwcer/yyds/kernel/players"
-	"github.com/hwcer/yyds/kernel/players/player"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/players"
+	"github.com/hwcer/wower/players/player"
+	"github.com/hwcer/wower/share"
 	"github.com/smallnest/rpcx/server"
 	"net"
 	"strings"

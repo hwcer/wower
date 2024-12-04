@@ -3,8 +3,8 @@ package player
 import (
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
-	"github.com/hwcer/yyds/kernel/players/emitter"
-	"github.com/hwcer/yyds/kernel/players/verify"
+	"github.com/hwcer/wower/players/emitter"
+	"github.com/hwcer/wower/players/verify"
 	"net"
 	"sync"
 )

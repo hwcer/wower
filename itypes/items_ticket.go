@@ -6,9 +6,9 @@ import (
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/model"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/share"
 )
 
 const (

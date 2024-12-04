@@ -1,7 +1,7 @@
 package itype
 
 import (
-	"github.com/hwcer/yyds/kernel/config"
+	"github.com/hwcer/wower/config"
 )
 
 var Equip = NewItemsIType(config.ITypeEquip)

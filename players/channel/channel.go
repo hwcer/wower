@@ -2,7 +2,7 @@ package channel
 
 import (
 	"github.com/hwcer/cosgo/await"
-	"github.com/hwcer/yyds/kernel/players/player"
+	"github.com/hwcer/wower/players/player"
 )
 
 //func NewMulti(readOnly bool) *Locker {

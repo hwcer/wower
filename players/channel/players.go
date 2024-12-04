@@ -2,8 +2,8 @@ package channel
 
 import (
 	"fmt"
-	"github.com/hwcer/yyds/kernel/players/player"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/players/player"
+	"github.com/hwcer/wower/share"
 	"sync"
 	"time"
 )

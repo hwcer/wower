@@ -1,6 +1,6 @@
 package players
 
-import "github.com/hwcer/yyds/kernel/players/player"
+import "github.com/hwcer/wower/players/player"
 
 type Players interface {
 	Try(uid uint64, handle player.Handle) error

@@ -1,10 +1,10 @@
 package player
 
 import (
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/values"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/share"
 )
 
 const (

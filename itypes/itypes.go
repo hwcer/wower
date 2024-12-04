@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/yyds/kernel/model"
+	"github.com/hwcer/wower/model"
 )
 
 type ITypeUnique func(u *updater.Updater, iid int32) (string, error)

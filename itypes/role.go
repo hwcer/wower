@@ -2,12 +2,12 @@ package itype
 
 import (
 	"github.com/hwcer/cosgo/logger"
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/model"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/options"
 )
 
 const (

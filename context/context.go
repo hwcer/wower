@@ -1,10 +1,10 @@
 package context
 
 import (
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosrpc/xshare"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/players/player"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/players/player"
 	"strconv"
 	"strings"
 	"time"

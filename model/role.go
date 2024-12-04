@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/share"
 )
 
 // RoleFieldTable ROLE 字段名和数字ID映射

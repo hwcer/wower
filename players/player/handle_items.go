@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/itypes"
-	"github.com/hwcer/yyds/kernel/model"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/itypes"
+	"github.com/hwcer/wower/model"
 )
 
 func init() {

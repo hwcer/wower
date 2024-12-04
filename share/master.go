@@ -2,9 +2,9 @@ package share
 
 import (
 	"github.com/hwcer/cosgo/logger"
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/request"
 	"github.com/hwcer/cosgo/values"
+	"github.com/hwcer/wower/options"
 	"strings"
 	"sync"
 )

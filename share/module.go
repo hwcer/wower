@@ -4,10 +4,10 @@ import (
 	"errors"
 	"github.com/hwcer/cosgo"
 	"github.com/hwcer/cosgo/logger"
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/utils"
 	"github.com/hwcer/cosrpc/xserver"
+	"github.com/hwcer/wower/options"
 )
 
 var mod *Module

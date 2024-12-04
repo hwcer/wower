@@ -1,8 +1,8 @@
 package context
 
 import (
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/registry"
+	"github.com/hwcer/wower/options"
 	"strings"
 )
 

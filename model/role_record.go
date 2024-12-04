@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/yyds/kernel/config"
+	"github.com/hwcer/wower/config"
 )
 
 const roleRecordField = "record"

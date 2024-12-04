@@ -1,8 +1,8 @@
 package context
 
 import (
-	"github.com/hwcer/yyds/kernel/players"
-	"github.com/hwcer/yyds/kernel/players/player"
+	"github.com/hwcer/wower/players"
+	"github.com/hwcer/wower/players/player"
 )
 
 //多用户批量锁操作,不需要交互的情况下直接注释或者删除此文件

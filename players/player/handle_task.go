@@ -4,11 +4,11 @@ import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/yyds/kernel/config"
-	"github.com/hwcer/yyds/kernel/model"
-	"github.com/hwcer/yyds/kernel/players/emitter"
-	"github.com/hwcer/yyds/kernel/players/verify"
-	"github.com/hwcer/yyds/kernel/share"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/model"
+	"github.com/hwcer/wower/players/emitter"
+	"github.com/hwcer/wower/players/verify"
+	"github.com/hwcer/wower/share"
 )
 
 const taskListenerKey = "task_listener_key"

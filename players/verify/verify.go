@@ -16,7 +16,7 @@ type Verify struct {
 }
 
 func (v *Verify) create() updater.Middleware {
-	return &plugs{}
+	return &middleware{}
 }
 
 // Auto 自动验证失败时 返回错误,不需要配合Verify使用
@@ -25,7 +25,7 @@ func (v *Verify) Auto(target Target) {
 		return
 	}
 	v.Target(target)
-	plug := v.u.Events.LoadOrCreate(updaterPlugName, v.create).(*plugs)
+	plug := v.u.Events.LoadOrCreate(updaterPlugName, v.create).(*middleware)
 	plug.dict = append(plug.dict, target)
 }
 

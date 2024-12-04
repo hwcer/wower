@@ -3,13 +3,13 @@ package model
 import (
 	"errors"
 	"fmt"
-	"github.com/hwcer/cosgo/options"
 	"github.com/hwcer/cosgo/redis"
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/cosmo"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
-	"github.com/hwcer/yyds/kernel/config"
+	"github.com/hwcer/wower/config"
+	"github.com/hwcer/wower/options"
 )
 
 const BaseSize = 32

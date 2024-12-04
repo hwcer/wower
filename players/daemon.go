@@ -3,8 +3,8 @@ package players
 import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/times"
-	"github.com/hwcer/yyds/kernel/players/options"
-	"github.com/hwcer/yyds/kernel/players/player"
+	"github.com/hwcer/wower/players/options"
+	"github.com/hwcer/wower/players/player"
 	"golang.org/x/net/context"
 	"net"
 	"runtime/debug"
