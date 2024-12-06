@@ -2,6 +2,7 @@ package options
 
 import (
 	"github.com/hwcer/cosgo"
+	"github.com/hwcer/cosrpc/xshare"
 	"sync/atomic"
 )
 
@@ -35,11 +36,11 @@ var Options = &struct {
 	Service map[string]string
 	Game    *game
 	Gate    *gate
-	Rpcx    *rpcx
+	Rpcx    *xshare.Rpcx
 }{
 	Verify:  1,
 	Service: Service,
 	Game:    Game,
 	Gate:    Gate,
-	Rpcx:    Rpcx,
+	Rpcx:    xshare.Options,
 }
