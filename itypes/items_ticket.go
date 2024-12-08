@@ -124,7 +124,7 @@ func (this *ticketPlug) sumTicket(u *updater.Updater, data *model.Items) {
 	t := times.New(u.Time)
 	nowTime := t.Now().Unix()
 	powerMax := this.powerMax(u, data.IID)
-	powerTime := data.Attach.GetInt64(ItemsAttachTypeTicket)
+	powerTime := data.Attach.GetInt64(model.AttachTypeTicket)
 
 	var value int64
 	var attach int64

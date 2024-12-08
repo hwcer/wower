@@ -2,6 +2,7 @@ package player
 
 import (
 	"fmt"
+	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
 	"github.com/hwcer/wower/itypes"
@@ -99,6 +100,10 @@ func (this *Items) GetOrCreate(id int32, autoInsertDB bool) (r *model.Items, exi
 }
 
 func (this *Items) SetAttach(id any, k string, v any) {
+	if !model.Attach.Has(k) {
+		logger.Alert("items.attach key not found:%v", k)
+		return
+	}
 	s := fmt.Sprintf("att.%d", k)
 	this.Collection.Set(id, s, v)
 }
