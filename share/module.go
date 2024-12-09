@@ -46,12 +46,14 @@ func (this *Module) Reload() (err error) {
 }
 
 func (this *Module) Verify() (err error) {
+	return nil //todo
 	if options.Options.Appid == "" {
 		return errors.New("appid empty")
 	}
 	if options.Options.Secret == "" {
 		return errors.New("secret empty")
 	}
+
 	var t *times.Times
 	t, err = times.Parse(options.Options.Game.Time)
 	if err != nil {
