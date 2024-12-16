@@ -54,7 +54,7 @@ func (this *IType) ObjectId(u *updater.Updater, iid int32) (string, error) {
 	if this.stacked {
 		return model.Unique(u, iid)
 	} else {
-		return model.Builder.New(uint32(iid)), nil
+		return model.ObjectId.New(uint32(iid)), nil
 	}
 }
 

@@ -70,6 +70,8 @@ func (r *Role) Get(k string) (v any, ok bool) {
 
 func (r *Role) Set(k string, v any) (any, bool) {
 	switch k {
+	case "Uid", "uid", "_id":
+		panic("uid write not allowed")
 	case "Lv", "lv":
 		r.Lv = v.(int32)
 	case "Exp", "exp":
@@ -124,7 +126,7 @@ func (r *Role) Getter(u *updater.Updater, data *dataset.Document, keys []string)
 	if len(keys) > 0 {
 		tx = tx.Select(keys...)
 	}
-	uid, _ := u.Uid().(uint16)
+	uid, _ := u.Uid().(uint64)
 	if uid == 0 {
 		return errors.New("Role.Getter uid not found")
 	}
@@ -138,7 +140,7 @@ func (r *Role) Getter(u *updater.Updater, data *dataset.Document, keys []string)
 	return nil
 }
 func (r *Role) Setter(u *updater.Updater, data dataset.Update) error {
-	uid, _ := u.Uid().(uint16)
+	uid, _ := u.Uid().(uint64)
 	if uid == 0 {
 		return errors.New("Role.Setter uid not found")
 	}

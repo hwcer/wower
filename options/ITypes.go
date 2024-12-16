@@ -3,7 +3,7 @@ package options
 const (
 	ITypeRole       int32 = 10
 	ITypeGoods      int32 = 20 //常规资源道具,只有数量无限叠加，仅仅扩展使用，非必须
-	ITypeItems      int32 = 21
+	ITypeItems      int32 = 21 //无法叠加道具，一般不用
 	ITypeTicket     int32 = 22
 	ITypeViper      int32 = 23
 	ITypeHero       int32 = 40

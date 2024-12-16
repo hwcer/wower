@@ -15,15 +15,15 @@ func init() {
 }
 
 type Order struct {
-	Model  `bson:"inline"`
-	Create int64  `json:"create" bson:"create" `            //订单创建时间
-	Expire int64  `json:"expire" bson:"expire" `            //过期时间
-	Trade  string `json:"trade" bson:"trade" index:"name:"` //平台订单号，用于对账
-	//Goods    int32       `json:"goods" bson:"goods"`               //payment ID
-	Status   OrderStatus `json:"status" bson:"status"`     //状态
-	Amount   float32     `json:"amount" bson:"amount"`     //订单金额(元，默认货币)
-	Receive  float32     `json:"receive" bson:"receive"`   //实际到账金额(元),平台折扣，代金券之类会抵消部分金额
-	Currency string      `json:"currency" bson:"currency"` //实际支付货币类型，参考百度"货币代码"，默认 CNY = 人民
+	Model    `bson:"inline"`
+	Trade    string      `json:"trade" bson:"trade" index:"name:"` //平台订单号，用于对账
+	Create   int64       `json:"create" bson:"create" `            //订单创建时间
+	Expire   int64       `json:"expire" bson:"expire" `            //过期时间,未完成订单过期后无法继续
+	Status   OrderStatus `json:"status" bson:"status"`             //状态
+	Amount   float32     `json:"amount" bson:"amount"`             //订单金额(元，默认货币)
+	Receive  float32     `json:"receive" bson:"receive"`           //实际到账金额(元),平台折扣，代金券之类会抵消部分金额
+	Platform int32       `json:"pfm" bson:"pfm"`                   //支付平台
+	Currency string      `json:"cyt" bson:"cyt"`                   //平台对账默认币种
 }
 
 // TableName 数据库表名

@@ -5,7 +5,6 @@ import (
 	"github.com/hwcer/cosgo/uuid"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/operator"
-	"github.com/hwcer/wower/model"
 	"github.com/hwcer/wower/options"
 )
 
@@ -31,19 +30,6 @@ type roleIType struct {
 type roleUpgrade interface {
 	Verify(u *updater.Updater, exp int64) (newExp int64)          //获得经验时进行检查
 	Submit(u *updater.Updater, lv int32, exp int64) (newLv int32) //判断升级，返回新的等级
-}
-
-func (this *roleIType) init() (err error) {
-	sid := options.Game.Sid
-	role := &model.Role{}
-	if tx := model.DB.Select("_id").Order("_id", -1).Limit(1).Find(role); tx.Error != nil {
-		return tx.Error
-	} else if tx.RowsAffected == 0 {
-		this.Builder = uuid.New(uint16(sid), 1000)
-	} else {
-		this.Builder, err = uuid.Create(role.Uid, 10)
-	}
-	return
 }
 
 // Listener 监听升级状态

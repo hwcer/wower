@@ -32,12 +32,11 @@ func (p *Player) Loading(init bool) (err error) {
 	}()
 	if p.Updater == nil {
 		p.Updater = updater.New(p.uid)
-		p.Updater.Process.Set(ProcessNamePlayer, p)
+		p.Updater.Process.Set(ProcessName, p)
 	}
-	if err = p.Updater.Loading(init); err != nil {
+	if err = p.Updater.Loading(init, p.initialize); err != nil {
 		return err
 	}
-	p.initialize()
 	return nil
 }
 

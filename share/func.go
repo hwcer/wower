@@ -27,3 +27,11 @@ func HasServiceMethod(path string) bool {
 	path = strings.TrimPrefix(path, "/")
 	return strings.HasPrefix(path, options.Gate.Prefix)
 }
+
+func TrimServiceMethod(path string) string {
+	if options.Gate.Prefix == "" {
+		return path
+	}
+	path = strings.TrimPrefix(path, "/")
+	return strings.TrimPrefix(path, options.Gate.Prefix)
+}

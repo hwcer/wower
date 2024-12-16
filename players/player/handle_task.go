@@ -21,7 +21,7 @@ func onTaskLoader(u *updater.Updater) {
 	if !doc.Loader() {
 		return
 	}
-	p := u.Process.Get(ProcessNamePlayer).(*Player)
+	p := u.Process.Get(ProcessName).(*Player)
 	p.Task.Range(func(id string, data *model.Task) bool {
 		if data.Status == model.TaskStatusStart {
 			p.Task.listener(data.IID)

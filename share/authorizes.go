@@ -1,6 +1,8 @@
 package share
 
 import (
+	"github.com/hwcer/wower/options"
+	"path"
 	"strings"
 )
 
@@ -23,16 +25,17 @@ func init() {
 		"/role/select": AuthorizesTypeOAuth,
 	}
 	for k, v := range s {
-		Authorizes.Set(k, v)
+		Authorizes.Set(options.ServiceTypeGame, k, v)
 	}
 }
 
-func (auth authorizes) Set(s string, i int8) {
-	s = strings.ToLower(s)
-	if !strings.HasPrefix(s, "/") {
-		s = "/" + s
+func (auth authorizes) Set(servicePath, serviceMethod string, i int8) {
+	r := path.Join(servicePath, serviceMethod)
+	r = strings.ToLower(r)
+	if !strings.HasPrefix(r, "/") {
+		r = "/" + r
 	}
-	auth[s] = i
+	auth[r] = i
 }
 
 func (auth authorizes) Get(s string) int8 {

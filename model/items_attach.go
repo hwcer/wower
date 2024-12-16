@@ -24,8 +24,12 @@ func (a att) Has(k string) bool {
 }
 
 func (a att) Register(k string) {
+	if a.dict == nil {
+		a.dict = make(map[string]struct{})
+	}
 	if _, ok := a.dict[k]; ok {
 		logger.Panic("already registered: " + k)
 	}
+
 	a.dict[k] = struct{}{}
 }

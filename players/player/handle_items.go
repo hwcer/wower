@@ -3,11 +3,13 @@ package player
 import (
 	"fmt"
 	"github.com/hwcer/cosgo/logger"
+	"github.com/hwcer/cosgo/values"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
 	"github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/model"
 	"github.com/hwcer/wower/options"
+	"github.com/hwcer/wower/share"
 )
 
 func init() {
@@ -19,7 +21,7 @@ func onItemsLoader(u *updater.Updater) {
 	if !doc.Loader() {
 		return
 	}
-	p := u.Process.Get(ProcessNamePlayer).(*Player)
+	p := u.Process.Get(ProcessName).(*Player)
 	p.Items.Collection.SetMonitor(&itemsIndexesMonitor{item: p.Items})
 	p.Items.Collection.Range(func(id string, doc *dataset.Document) bool {
 		p.Items.addIndexes(doc)
@@ -86,6 +88,30 @@ func (this *Items) Get(id any) (r *model.Items) {
 	}
 	return
 }
+func (this *Items) Val(id any) int64 {
+	switch id.(type) {
+	case string:
+		return this.Collection.Val(id)
+	default:
+		k := values.ParseInt64(id)
+		return this.valWithIID(int32(k))
+	}
+}
+
+func (this *Items) valWithIID(id int32) (r int64) {
+	it := share.Config.ITypes.GetIType(id)
+	if it == 0 {
+		return 0
+	}
+	this.RangeWithIType(it, func(_ string, d *model.Items) bool {
+		if d.IID == id {
+			r += d.Value
+		}
+		return true
+	})
+	return
+}
+
 func (this *Items) GetOrCreate(id int32, autoInsertDB bool) (r *model.Items, exist bool) {
 	if i := this.Collection.Get(id); i != nil {
 		exist = true

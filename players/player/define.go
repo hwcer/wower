@@ -1,6 +1,6 @@
 package player
 
-const ProcessNamePlayer = "_sys_process_player"
+const ProcessName = "_sys_process_player"
 
 type itemGroup interface {
 	GetId() int32

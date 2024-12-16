@@ -13,7 +13,7 @@ const (
 	ServicePlayerOAuth  = "_player_oauth"
 	ServicePlayerLogout = "_player_logout"
 
-	ServicePlayerRoomJoin  = "player.room.join"  //已经加入的房间
-	ServicePlayerRoomLeave = "player.room.leave" //离开房间
-	ServicePlayerSelector  = "service.selector." //服务器重定向
+	ServicePlayerRoomJoin  = "player.join"      //已经加入的房间
+	ServicePlayerRoomLeave = "player.leave"     //离开房间
+	ServicePlayerSelector  = "service.selector" //服务器重定向
 )

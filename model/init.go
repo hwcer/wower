@@ -17,11 +17,8 @@ const UpdaterProcessBuilder = "_player_builder"
 
 var DB = cosmo.New()
 var Redis *redis.Client
-var Builder *uuid.Unique //随机自增种子,生成全服唯一ID
-
-type initialize interface {
-	init() error
-}
+var Builder *uuid.Builder //生成角色ID
+var ObjectId *uuid.Unique //随机自增种子,生成全服唯一ID
 
 // Unique 创建可以叠加的道具ID
 func Unique(u *updater.Updater, iid int32) (r string, err error) {
@@ -97,24 +94,15 @@ func Start() (err error) {
 	if options.Game.Redis != "" {
 		Redis, err = redis.New(options.Game.Redis)
 	}
-	Builder = uuid.NewUnique(uint32(sid), BaseSize)
-	updater.ITypes(func(k int32, it updater.IType) bool {
-		if h, ok := it.(initialize); ok {
-			if err = h.init(); err != nil {
-				return false
-			}
-		}
-		return true
-	})
-	updater.Models(func(k int32, m any) bool {
-		if h, ok := m.(initialize); ok {
-			if err = h.init(); err != nil {
-				return false
-			}
-		}
-		return true
-	})
-
+	ObjectId = uuid.NewUnique(uint32(sid), BaseSize)
+	role := &Role{}
+	if tx := DB.Select("_id").Order("_id", -1).Limit(1).Find(role); tx.Error != nil {
+		return tx.Error
+	} else if tx.RowsAffected == 0 {
+		Builder = uuid.New(uint16(sid), 1000)
+	} else {
+		Builder, err = uuid.Create(role.Uid, 10)
+	}
 	return
 }
 

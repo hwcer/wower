@@ -27,7 +27,7 @@ type TicketConfig interface {
 }
 
 func init() {
-	Ticket.itemsIType = NewItemsIType(options.ITypeTicket)
+	Ticket.ItemsIType = NewItemsIType(options.ITypeTicket)
 	Ticket.GetConfig = func(i int32) TicketConfig {
 		logger.Alert("请设置 itypes.Ticket.GetConfig")
 		return nil
@@ -38,7 +38,7 @@ func init() {
 }
 
 type TicketIType struct {
-	*itemsIType
+	*ItemsIType
 	GetConfig func(int32) TicketConfig
 }
 

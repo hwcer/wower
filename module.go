@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/hwcer/cosgo"
 	"github.com/hwcer/cosgo/logger"
+	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/utils"
 	"github.com/hwcer/cosrpc/xshare"
 	_ "github.com/hwcer/wower/context"
@@ -35,9 +36,11 @@ func (this *Module) Id() string {
 	return "kernel"
 }
 func (this *Module) Init() (err error) {
-	if err = options.Initialize(); err != nil {
+
+	if err = utils.Assert(options.Initialize, this.Verify); err != nil {
 		return err
 	}
+
 	var ip string
 	if ip, err = xshare.LocalIpv4(); err != nil {
 		return
@@ -108,6 +111,23 @@ func (this *Module) Close() (err error) {
 		return
 	}
 	return nil
+}
+
+func (this *Module) Verify() (err error) {
+	if options.Options.Appid == "" {
+		return errors.New("appid empty")
+	}
+	if options.Options.Secret == "" {
+		return errors.New("secret empty")
+	}
+
+	var t *times.Times
+	t, err = times.Parse(options.Options.Game.Time)
+	if err != nil {
+		return err
+	}
+	options.Game.ServerTime = t.Unix()
+	return
 }
 
 func autoServerId(ip string) (sid int32) {

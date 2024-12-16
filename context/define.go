@@ -1,10 +1,9 @@
 package context
 
 import (
-	"github.com/hwcer/cosgo/registry"
 	"github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/share"
-	"strings"
+	"path"
 )
 
 const (
@@ -19,10 +18,12 @@ var Verify func(*Context) (Token, error) //登录验证
 //	return nil
 //}
 
-func MethodGrade(serviceMethod string) int8 {
-	if options.Gate.Prefix != "" {
-		routePrefix := registry.Join(options.Gate.Prefix)
-		serviceMethod = strings.TrimPrefix(serviceMethod, routePrefix)
-	}
-	return share.Authorizes.Get(serviceMethod)
+func MethodGrade(s string) int8 {
+	//if options.Gate.Prefix != "" {
+	//	routePrefix := registry.Join(options.Gate.Prefix)
+	//	serviceMethod = strings.TrimPrefix(serviceMethod, routePrefix)
+	//}
+	s = share.TrimServiceMethod(s)
+	s = path.Join(options.ServiceTypeGame, s)
+	return share.Authorizes.Get(s)
 }
