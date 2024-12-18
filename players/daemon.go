@@ -16,10 +16,12 @@ import (
 // Connected 连线，不包括断线重连等
 func Connected(p *player.Player, conn net.Conn) bool {
 	status := p.Status
-	if !(status == player.StatusNone || status == player.StatusDisconnect || status == player.StatusRecycling) {
+	if status == player.StatusLocked || status == player.StatusRelease {
 		return false
 	}
-	if !atomic.CompareAndSwapInt32(&p.Status, status, player.StatusConnected) {
+	if status == player.StatusConnected {
+		// 顶号
+	} else if !atomic.CompareAndSwapInt32(&p.Status, status, player.StatusConnected) {
 		return false
 	}
 	if status == player.StatusNone || status == player.StatusRecycling {
