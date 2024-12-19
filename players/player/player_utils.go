@@ -8,7 +8,6 @@ import (
 	"github.com/hwcer/updater"
 	"github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/players/emitter"
-	"net"
 	"reflect"
 	"sync/atomic"
 )
@@ -54,12 +53,6 @@ func (p *Player) Destroy() error {
 	}
 	p.Updater = nil
 	return nil
-}
-func (p *Player) RemoteAddr() (r net.Addr) {
-	if p.Conn != nil {
-		r = p.Conn.RemoteAddr()
-	}
-	return
 }
 
 func (p *Player) Emit(t int32, v int32, args ...int32) {

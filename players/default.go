@@ -2,15 +2,11 @@ package players
 
 import (
 	"fmt"
-	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/scc"
-	"github.com/hwcer/cosgo/times"
-	"github.com/hwcer/wower/model"
 	"github.com/hwcer/wower/players/channel"
 	"github.com/hwcer/wower/players/locker"
 	"github.com/hwcer/wower/players/options"
 	"github.com/hwcer/wower/players/player"
-	"net"
 	"sync/atomic"
 )
 
@@ -62,11 +58,9 @@ func Load(uid uint64, init bool, handle player.Handle) (err error) {
 }
 
 // Login 登录成功,只能在登录时调用
-//
-//	TODO 顶号
-func Login(uid uint64, conn net.Conn, handle player.Handle) (err error) {
+func Login(uid uint64, meta map[string]string, handle player.Handle) (err error) {
 	err = ps.Load(uid, true, func(p *player.Player) error {
-		if e := Connect(p, conn); e != nil {
+		if e := Connect(p, meta); e != nil {
 			return e
 		}
 		return handle(p)
@@ -76,37 +70,4 @@ func Login(uid uint64, conn net.Conn, handle player.Handle) (err error) {
 
 func Locker(uid []uint64, handle player.LockerHandle, done ...func()) error {
 	return ps.Locker(uid, handle, done...)
-}
-
-// LoadWithUnlock 获取无锁状态的Player,无锁,无状态判断,仅仅API入口处使用
-//func LoadWithUnlock(uid uint64) (r *player.Player) {
-//	return ps.LoadWithUnlock(uid)
-//}
-
-// loading 初始加载用户到内存
-func loading() (err error) {
-	if options.Options.MemoryInstall == 0 {
-		return nil
-	}
-	var rows []*model.Role
-	now := times.Unix()
-	lastTime := now - 7*86400
-	tx := model.DB.Select("_id", "name").Order("update", -1)
-	tx = tx.Where("update > ?", lastTime)
-	tx = tx.Limit(options.Options.MemoryInstall).Find(&rows)
-	if tx.Error != nil {
-		return tx.Error
-	}
-	var p *player.Player
-
-	for _, r := range rows {
-		p = player.New(r.Uid)
-		if err = p.Loading(true); err == nil {
-			ps.Store(r.Uid, p)
-			p.KeepAlive(now)
-			logger.Debug("预加载用户: [%v] %v", p.Uid(), r.Name)
-		}
-	}
-	logger.Trace("累计预加载用户数量:%v\n", len(rows))
-	return
 }

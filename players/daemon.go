@@ -3,11 +3,12 @@ package players
 import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/times"
+	"github.com/hwcer/cosgo/values"
+	opt "github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/players/options"
 	"github.com/hwcer/wower/players/player"
 	"github.com/hwcer/wower/share"
 	"golang.org/x/net/context"
-	"net"
 	"runtime/debug"
 	"sort"
 	"sync/atomic"
@@ -15,23 +16,29 @@ import (
 )
 
 // Connect 连线，不包括断线重连等
-func Connect(p *player.Player, conn net.Conn) error {
+func Connect(p *player.Player, meta map[string]string) error {
 	status := p.Status
+	session := meta[opt.ServicePlayerSession]
+
 	if status == player.StatusLocked || status == player.StatusRelease {
 		return share.ErrLoginWaiting
 	}
 	if status == player.StatusConnected {
-		//if conn.RemoteAddr().String() == p.RemoteAddr().String() {
-		//	return values.Errorf(0, "Please do not log in again")
-		//}
-		// 顶号
+		if session != "" && p.Session == session {
+			return values.Errorf(0, "Please do not log in again")
+		}
 	} else if !atomic.CompareAndSwapInt32(&p.Status, status, player.StatusConnected) {
 		return share.ErrLoginWaiting
 	}
 	if status == player.StatusNone || status == player.StatusRecycling {
 		atomic.AddInt32(&playersOnline, 1)
 	}
-	p.Conn = conn
+	if session != "" {
+		p.Session = session
+	}
+	if gateway := meta[opt.ServicePlayerGateway]; gateway != "" {
+		p.Gateway = gateway
+	}
 	if p.Message == nil {
 		p.Message = &player.Message{}
 	}

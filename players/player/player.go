@@ -5,7 +5,6 @@ import (
 	"github.com/hwcer/updater"
 	"github.com/hwcer/wower/players/emitter"
 	"github.com/hwcer/wower/players/verify"
-	"net"
 	"sync"
 )
 
@@ -23,7 +22,6 @@ type Player struct {
 	*updater.Updater
 	uid        uint64
 	uuid       *uuid.UUID
-	Conn       net.Conn
 	Role       *Role
 	Task       *Task
 	Items      *Items
@@ -33,9 +31,11 @@ type Player struct {
 	Message    *Message   //最后一次发包的 MESSAGE
 	mutex      sync.Mutex //底层自动使用锁，不要手动调用
 	emitter    *emitter.Emitter
-	heartbeat  int64 //最后心跳时间
-	lastUpdate int64 //强制更新时间节点
-	mustUpdate bool  //是否需要强制更新
+	Gateway    string //网关地址
+	Session    string //当前登录session id
+	heartbeat  int64  //最后心跳时间
+	lastUpdate int64  //强制更新时间节点
+	mustUpdate bool   //是否需要强制更新
 }
 
 func (p *Player) initialize() {

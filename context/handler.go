@@ -9,8 +9,6 @@ import (
 	"github.com/hwcer/wower/players"
 	"github.com/hwcer/wower/players/player"
 	"github.com/hwcer/wower/share"
-	"github.com/smallnest/rpcx/server"
-	"net"
 	"strings"
 )
 
@@ -83,18 +81,14 @@ func verify(c *Context, handle func() error) (err error) {
 		if update := c.Player.Role.Val("update"); update < times.Daily(0).Unix() && c.ServiceMethod() != ServiceMethodRoleRenewal {
 			return share.ErrNeedResetSession
 		}
-		conn := c.GetValue(server.RemoteConnContextKey).(net.Conn)
 		//尝试重新上线
+		meta := c.Metadata()
 		if c.Player.Status != player.StatusConnected {
-			if e := players.Connect(p, conn); e != nil {
+			if e := players.Connect(p, meta); e != nil {
 				return e
 			}
-		} else {
-			if addr := c.Player.RemoteAddr(); addr == nil {
-				return values.Parse("RemoteAddr Empty")
-			} else if addr.String() != conn.RemoteAddr().String() {
-				return share.ErrReplaced
-			}
+		} else if session := meta[options.ServicePlayerSession]; session != p.Session {
+			return share.ErrReplaced
 		}
 
 		return handle()
