@@ -29,16 +29,18 @@ func NewRole() *Role {
 
 type Role struct {
 	Uid     uint64          `json:"uid" bson:"_id"`
-	Lv      int32           `json:"lv" bson:"lv"`              //等级
-	Exp     int64           `json:"exp" bson:"exp"`            //经验
-	Guid    string          `bson:"guid" json:"guid" index:""` //账号ID
-	Name    string          `json:"name" bson:"name"`          //名称
-	Icon    string          `json:"icon" bson:"icon"`          //头像
-	Goods   map[int32]int64 `json:"goods" bson:"goods"`        //常规计数类型道具，可选使用
-	Record  map[int32]int64 `json:"record" bson:"record"`      //成就,并不直接返回给客户端
-	Create  int64           `json:"create" bson:"create" `     //创建时间
-	Update  int64           `json:"-" bson:"update" `          //最后更新时间
-	Machine string          `json:"-" bson:"machine"`          //客户端机器码,用于判断是否更换机器
+	Lv      int32           `json:"lv" bson:"lv"`                    //等级
+	Exp     int64           `json:"exp" bson:"exp"`                  //经验
+	Guid    string          `bson:"guid" json:"guid" index:""`       //账号ID
+	Name    string          `json:"name" bson:"name"`                //名称
+	Icon    string          `json:"icon" bson:"icon"`                //头像
+	Prof    int32           `json:"prof" bson:"prof"`                //职业
+	Goods   map[int32]int64 `json:"goods" bson:"goods"`              //常规计数类型道具，可选使用
+	Record  map[int32]int64 `json:"record" bson:"record"`            //成就,并不直接返回给客户端
+	Create  int64           `json:"create" bson:"create" `           //创建时间
+	Update  int64           `json:"update,omitempty" bson:"update" ` //最后更新时间
+	Machine string          `json:"-" bson:"machine"`                //客户端机器码,用于判断是否更换机器
+	Install int8            `json:"-" bson:"install"`
 }
 
 func (r *Role) Get(k string) (v any, ok bool) {

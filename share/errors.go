@@ -11,14 +11,15 @@ var (
 	ErrNotSelectRole    = values.Errorf(4, "not select role")   //请先选择角色
 	ErrServerLimit      = values.Errorf(5, "server role limit") //服务器创角已满
 	ErrMasterEmpty      = values.Errorf(6, "master url is empty")
-	ErrRoleNotExist     = values.Errorf(10, "role not exist")      // 角色不存在
-	ErrLoginWaiting     = values.Errorf(11, "Wait a moment")       //正在释放数据,需要等一会再登录
-	ErrNeedResetSession = values.Errorf(12, "need reset session")  //跨天需要特殊处理
-	ErrLoginAgain       = values.Errorf(101, "please login again") //需要重新登录
-	ErrLoginDisabled    = values.Errorf(102, "disabled")           //账号禁用
-	ErrDataNotExists    = values.Errorf(104, "data not exists")    //数据库数据不存在
-	ErrPlayerMax        = values.Errorf(105, "player max")         //房间已满
-	ErrDataExists       = values.Errorf(106, "data exists")        //数据已经存在
+	ErrRoleNotExist     = values.Errorf(10, "role not exist")     // 角色不存在
+	ErrLoginWaiting     = values.Errorf(11, "Wait a moment")      //正在释放数据,需要等一会再登录
+	ErrNeedResetSession = values.Errorf(12, "need reset session") //跨天需要特殊处理
+	
+	ErrLoginAgain    = values.Errorf(101, "please login again") //需要重新登录
+	ErrLoginDisabled = values.Errorf(102, "disabled")           //账号禁用
+	ErrDataNotExists = values.Errorf(104, "data not exists")    //数据库数据不存在
+	ErrPlayerMax     = values.Errorf(105, "player max")         //房间已满
+	ErrDataExists    = values.Errorf(106, "data exists")        //数据已经存在
 
 	ErrConfigEmpty   = values.Errorf(200, "CS empty")        //配置不存在
 	ErrItemNotEnough = values.Errorf(202, "item not enough") //道具,材料不足

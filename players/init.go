@@ -10,7 +10,6 @@ import (
 	"github.com/hwcer/wower/players/locker"
 	"github.com/hwcer/wower/players/options"
 	"github.com/hwcer/wower/players/player"
-	"github.com/hwcer/wower/share"
 	"net"
 	"sync/atomic"
 )
@@ -67,8 +66,8 @@ func Load(uid uint64, init bool, handle player.Handle) (err error) {
 //	TODO 顶号
 func Login(uid uint64, conn net.Conn, handle player.Handle) (err error) {
 	err = ps.Load(uid, true, func(p *player.Player) error {
-		if !Connected(p, conn) {
-			return share.ErrLoginWaiting
+		if e := Connect(p, conn); e != nil {
+			return e
 		}
 		return handle(p)
 	})
@@ -105,7 +104,7 @@ func loading() (err error) {
 		if err = p.Loading(true); err == nil {
 			ps.Store(r.Uid, p)
 			p.KeepAlive(now)
-			logger.Debug("预加载用户: [%v] %v", p.Uid(), p.Get("name"))
+			logger.Debug("预加载用户: [%v] %v", p.Uid(), r.Name)
 		}
 	}
 	logger.Trace("累计预加载用户数量:%v\n", len(rows))

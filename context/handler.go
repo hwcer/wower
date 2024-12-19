@@ -86,8 +86,8 @@ func verify(c *Context, handle func() error) (err error) {
 		conn := c.GetValue(server.RemoteConnContextKey).(net.Conn)
 		//尝试重新上线
 		if c.Player.Status != player.StatusConnected {
-			if !players.Connected(p, conn) {
-				return share.ErrLogin
+			if e := players.Connect(p, conn); e != nil {
+				return e
 			}
 		} else {
 			if addr := c.Player.RemoteAddr(); addr == nil {

@@ -5,6 +5,7 @@ import (
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/wower/players/options"
 	"github.com/hwcer/wower/players/player"
+	"github.com/hwcer/wower/share"
 	"golang.org/x/net/context"
 	"net"
 	"runtime/debug"
@@ -13,16 +14,19 @@ import (
 	"time"
 )
 
-// Connected 连线，不包括断线重连等
-func Connected(p *player.Player, conn net.Conn) bool {
+// Connect 连线，不包括断线重连等
+func Connect(p *player.Player, conn net.Conn) error {
 	status := p.Status
 	if status == player.StatusLocked || status == player.StatusRelease {
-		return false
+		return share.ErrLoginWaiting
 	}
 	if status == player.StatusConnected {
+		//if conn.RemoteAddr().String() == p.RemoteAddr().String() {
+		//	return values.Errorf(0, "Please do not log in again")
+		//}
 		// 顶号
 	} else if !atomic.CompareAndSwapInt32(&p.Status, status, player.StatusConnected) {
-		return false
+		return share.ErrLoginWaiting
 	}
 	if status == player.StatusNone || status == player.StatusRecycling {
 		atomic.AddInt32(&playersOnline, 1)
@@ -32,7 +36,7 @@ func Connected(p *player.Player, conn net.Conn) bool {
 		p.Message = &player.Message{}
 	}
 	p.KeepAlive(0)
-	return true
+	return nil
 }
 
 // Disconnect 下线,心跳超时,断开连接等
