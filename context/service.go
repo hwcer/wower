@@ -2,7 +2,6 @@ package context
 
 import (
 	"fmt"
-	"github.com/hwcer/cosgo"
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/registry"
 	"github.com/hwcer/cosgo/values"
@@ -77,12 +76,8 @@ var handlerCaller xshare.HandlerCaller = func(node *registry.Node, sc *xshare.Co
 	c := &Context{Context: sc}
 	defer func() {
 		if v := recover(); v != nil {
-			if cosgo.Debug() {
-				reply = Errorf(500, v)
-			} else {
-				reply = Errorf(500, "server recover error")
-			}
-			logger.Trace("server recover error:%v\n%v", v, string(debug.Stack()))
+			reply, err = serialize(sc, Errorf(500, "server error"))
+			logger.Trace("server error:%v\n%v", v, string(debug.Stack()))
 		}
 	}()
 	ex := verify(c, func() error {
@@ -115,17 +110,19 @@ var handlerMetadata xshare.HandlerMetadata = func() string {
 }
 
 func serialize(c *xshare.Context, reply interface{}) ([]byte, error) {
+	b := xshare.Binder(c)
 	switch v := reply.(type) {
 	case []byte:
 		return v, nil
 	case *Message:
-		if v.Code == 0 && v.Data == nil {
+		if v.Data == nil {
 			return []byte{}, nil //长连接返回 nil 不自动回复
 		} else {
-			return xshare.Binder.Marshal(reply)
+			return b.Marshal(reply)
 		}
 	default:
-		return xshare.Binder.Marshal(reply)
+		logger.Error("未知返回信息类型:%v%v", c.ServicePath(), c.ServiceMethod())
+		return b.Marshal(reply)
 	}
 }
 

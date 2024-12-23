@@ -8,7 +8,6 @@ import (
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/utils"
 	"github.com/hwcer/cosrpc/xshare"
-	_ "github.com/hwcer/wower/context"
 	_ "github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/model"
 	"github.com/hwcer/wower/options"

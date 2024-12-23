@@ -4,7 +4,7 @@ const (
 	ServiceMetadataUID       = "uid"
 	ServiceMetadataGUID      = "guid"
 	ServiceMetadataServerId  = "sid"
-	ServiceMetadataRequestId = "_rid"
+	ServiceMetadataRequestId = "rid"
 
 	ServiceMessagePath   = "_msg_path"
 	ServiceMessageRoom   = "_msg_room"

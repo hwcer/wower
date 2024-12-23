@@ -23,16 +23,19 @@ func caller(c *Context, node *registry.Node) any {
 		vs := node.Call(c)
 		v = vs[0].Interface()
 	}
-
+	var err error
 	//直接返回二进制不做任何处理
 	if r, ok := v.([]byte); ok {
-		return r
+		if _, err = c.Player.Submit(); err != nil {
+			return Error(err)
+		} else {
+			return r
+		}
 	}
 
 	r := Parse(v)
 	r.Time = c.Time().UnixMilli()
 	if r.Code == 0 && c.Player != nil {
-		var err error
 		if r.Cache, err = c.Player.Submit(); err != nil {
 			r = Error(err)
 		} else {
