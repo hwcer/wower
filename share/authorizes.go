@@ -20,7 +20,10 @@ type authorizes map[string]int8
 
 func init() {
 	s := map[string]int8{
+		"/ping":        AuthorizesTypeNone,
+		"/heart":       AuthorizesTypeNone,
 		"/login":       AuthorizesTypeNone,
+		"/roles":       AuthorizesTypeOAuth,
 		"/role/create": AuthorizesTypeOAuth,
 		"/role/select": AuthorizesTypeOAuth,
 	}
