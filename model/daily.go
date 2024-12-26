@@ -20,7 +20,7 @@ func init() {
 
 type Daily struct {
 	Model  `bson:"inline"`
-	Value  map[int32]int64 `bson:"val" json:"val"`  //日常记录
+	Value  map[int32]int64 `bson:"val" json:"val"`  //日常记录 96001-1  ,96001-10
 	Signup int32           `bson:"signup" json:"-"` //玩家注册日期，可以配合IID查留存
 }
 
