@@ -28,7 +28,7 @@ type TicketConfig interface {
 
 func init() {
 	Ticket.ItemsIType = NewItemsIType(options.ITypeTicket)
-	Ticket.GetConfig = func(i int32) TicketConfig {
+	Ticket.GetConfig = func(*updater.Updater, int32) TicketConfig {
 		logger.Alert("请设置 itypes.Ticket.GetConfig")
 		return nil
 	}
@@ -39,7 +39,7 @@ func init() {
 
 type TicketIType struct {
 	*ItemsIType
-	GetConfig func(int32) TicketConfig
+	GetConfig func(*updater.Updater, int32) TicketConfig
 }
 
 func (this *TicketIType) Listener(u *updater.Updater, op *operator.Operator) {
@@ -50,7 +50,7 @@ func (this *TicketIType) Listener(u *updater.Updater, op *operator.Operator) {
 func (this *TicketIType) Settlement(u *updater.Updater, iid ...int32) {
 	plug := u.Events.LoadOrCreate(ticketPlugName, this.createTicketPlug).(*ticketPlug)
 	for _, id := range iid {
-		c := this.GetConfig(id)
+		c := this.GetConfig(u, id)
 		if c == nil {
 			continue
 		}
@@ -95,7 +95,7 @@ func (this *ticketPlug) checkAllTicket(u *updater.Updater) bool {
 }
 
 func (this *ticketPlug) powerMax(u *updater.Updater, iid int32) int64 {
-	c := Ticket.GetConfig(iid)
+	c := Ticket.GetConfig(u, iid)
 	limit := c.GetLimit()
 	powerMax := int64(limit[2])
 	if limit[0] > 0 && limit[1] > 0 {
@@ -120,7 +120,7 @@ func (this *ticketPlug) newTicket(u *updater.Updater, iid int32) {
 }
 
 func (this *ticketPlug) sumTicket(u *updater.Updater, data *model.Items) {
-	c := Ticket.GetConfig(data.IID)
+	c := Ticket.GetConfig(u, data.IID)
 	t := times.New(u.Time)
 	nowTime := t.Now().Unix()
 	powerMax := this.powerMax(u, data.IID)

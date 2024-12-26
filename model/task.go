@@ -13,9 +13,9 @@ import (
 type TaskStatus int8
 
 const (
-	TaskStatusNone  TaskStatus = 0 //无
-	TaskStatusStart TaskStatus = 1 //即时任务进行中
-	//TaskStatusFinish TaskStatus = 2 //已经完成
+	TaskStatusNone   TaskStatus = 0 //无
+	TaskStatusStart  TaskStatus = 1 //即时任务进行中
+	TaskStatusFinish TaskStatus = 2 //已经完成
 )
 
 func init() {
@@ -24,19 +24,22 @@ func init() {
 
 type Task struct {
 	Model  `bson:"inline"`
-	Value  int32      `bson:"val" json:"val"`        //完成次数，一般 0/1 除非可以多次完成的任务，通过重置 Status = 1
+	Value  int32      `bson:"val" json:"val"`        //完成次数，一般 0/1 除非可以多次完成的任务
 	Target int64      `bson:"tar" json:"tar"`        //任务进度,仅仅即时任务有效
+	Expire int64      `bson:"expire" json:"expire"`  //任务过期时间,仅仅针对已完成的每日，每周任务
 	Status TaskStatus `bson:"status" json:"status" ` //0-无，1-进行中
 }
 
 func (this *Task) Get(k string) (any, bool) {
 	switch k {
-	case "Status", "status":
-		return this.Status, true
 	case "Value", "val":
 		return this.Value, true
 	case "Target", "tar":
 		return this.Target, true
+	case "Expire", "expire":
+		return this.Expire, true
+	case "Status", "status":
+		return this.Status, true
 	default:
 		return this.Model.Get(k)
 	}
@@ -45,12 +48,14 @@ func (this *Task) Get(k string) (any, bool) {
 // Set 更新器
 func (this *Task) Set(k string, v any) (any, bool) {
 	switch k {
-	case "Status", "status":
-		this.Status = v.(TaskStatus)
 	case "Value", "val":
 		this.Value = dataset.ParseInt32(v)
 	case "Target", "tar":
 		this.Target = dataset.ParseInt64(v)
+	case "Expire", "expire":
+		this.Expire = dataset.ParseInt64(v)
+	case "Status", "status":
+		this.Status = v.(TaskStatus)
 	default:
 		return this.Model.Set(k, v)
 	}

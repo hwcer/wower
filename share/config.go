@@ -27,7 +27,7 @@ type iMax interface {
 type iType interface {
 	GetIType() int32
 }
-type it struct {
+type configIType struct {
 	Name  string
 	IMax  int32
 	IType int32
@@ -191,17 +191,17 @@ func (c *CS) getDataFromUrl(url string) (b []byte, err error) {
 	return
 }
 
-type configITypes map[int32]*it
+type configITypes map[int32]*configIType
 
-func (its configITypes) set(k int32, v *it) {
+func (its configITypes) set(k int32, v *configIType) {
 	its[k] = v
 }
-func (its configITypes) get(k int32) *it {
+func (its configITypes) get(k int32) *configIType {
 	return its[k]
 }
 
 func (its configITypes) Add(k int32, iType int32, iMax int32, name string) {
-	it := &it{Name: name, IType: iType, IMax: iMax}
+	it := &configIType{Name: name, IType: iType, IMax: iMax}
 	its.set(k, it)
 }
 
@@ -250,7 +250,7 @@ func (its configITypes) Parse(name string, items any, iType int32, iMax int32) (
 			errs = append(errs, fmt.Errorf("道具ID重复,%v[%v]=%v[%v]", name, id, x.Name, id))
 		}
 
-		it := &it{Name: name, IType: iType}
+		it := &configIType{Name: name, IType: iType}
 		its.set(id, it)
 		if it.IMax = its.reflectIMax(id, i); it.IMax == 0 {
 			it.IMax = iMax
