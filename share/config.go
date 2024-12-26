@@ -27,6 +27,11 @@ type iMax interface {
 type iType interface {
 	GetIType() int32
 }
+type it struct {
+	Name  string
+	IMax  int32
+	IType int32
+}
 
 // configHandle 检查或者预处理接口
 type configHandle interface {
@@ -186,24 +191,18 @@ func (c *CS) getDataFromUrl(url string) (b []byte, err error) {
 	return
 }
 
-type IT struct {
-	Name  string
-	IMax  int32
-	IType int32
-}
-type configITypes map[int32]*IT
+type configITypes map[int32]*it
 
-func (its configITypes) Set(k int32, v *IT) {
+func (its configITypes) set(k int32, v *it) {
 	its[k] = v
+}
+func (its configITypes) get(k int32) *it {
+	return its[k]
 }
 
 func (its configITypes) Add(k int32, iType int32, iMax int32, name string) {
-	it := &IT{Name: name, IType: iType, IMax: iMax}
-	its.Set(k, it)
-}
-
-func (its configITypes) Get(k int32) *IT {
-	return its[k]
+	it := &it{Name: name, IType: iType, IMax: iMax}
+	its.set(k, it)
 }
 
 func (its configITypes) Has(k int32) bool {
@@ -212,7 +211,7 @@ func (its configITypes) Has(k int32) bool {
 }
 
 func (its configITypes) GetIMax(iid int32) (r int64) {
-	if i := its.Get(iid); i != nil {
+	if i := its.get(iid); i != nil {
 		r = int64(i.IMax)
 	}
 	return
@@ -222,7 +221,7 @@ func (its configITypes) GetIType(iid int32) (r int32) {
 	if iid < 10 {
 		return 0
 	}
-	if i := its.Get(iid); i != nil {
+	if i := its.get(iid); i != nil {
 		r = i.IType
 	} else {
 		s := strconv.Itoa(int(iid))
@@ -247,12 +246,12 @@ func (its configITypes) Parse(name string, items any, iType int32, iMax int32) (
 		}
 		v := rv.MapIndex(k)
 		i := v.Interface()
-		if x := its.Get(id); x != nil {
+		if x := its.get(id); x != nil {
 			errs = append(errs, fmt.Errorf("道具ID重复,%v[%v]=%v[%v]", name, id, x.Name, id))
 		}
 
-		it := &IT{Name: name, IType: iType}
-		its.Set(id, it)
+		it := &it{Name: name, IType: iType}
+		its.set(id, it)
 		if it.IMax = its.reflectIMax(id, i); it.IMax == 0 {
 			it.IMax = iMax
 		}
