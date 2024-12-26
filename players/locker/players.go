@@ -1,8 +1,8 @@
 package locker
 
 import (
+	"github.com/hwcer/wower/errors"
 	"github.com/hwcer/wower/players/player"
-	"github.com/hwcer/wower/share"
 	"sync"
 	"time"
 )
@@ -33,7 +33,7 @@ func (this *Players) Try(uid uint64, handle player.Handle) error {
 		}
 	}
 	if p != nil && p.Status == player.StatusRelease {
-		return share.ErrLoginWaiting
+		return errors.ErrLoginWaiting
 	}
 	return handle(p)
 }
@@ -48,7 +48,7 @@ func (this *Players) Get(uid uint64, handle player.Handle) error {
 		defer p.Release()
 	}
 	if p != nil && p.Status == player.StatusRelease {
-		return share.ErrLoginWaiting
+		return errors.ErrLoginWaiting
 	}
 	return handle(p)
 }

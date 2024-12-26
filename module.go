@@ -1,13 +1,13 @@
 package wower
 
 import (
-	"errors"
 	"fmt"
 	"github.com/hwcer/cosgo"
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/utils"
 	"github.com/hwcer/cosrpc/xshare"
+	"github.com/hwcer/wower/errors"
 	_ "github.com/hwcer/wower/itypes"
 	"github.com/hwcer/wower/model"
 	"github.com/hwcer/wower/options"
@@ -92,7 +92,7 @@ func (this *Module) Init() (err error) {
 	}
 
 	if err = share.Master.Post(share.MasterApiTypeGameServerUpdate, args, nil); err != nil {
-		if errors.Is(err, share.ErrMasterEmpty) {
+		if errors.Is(err, errors.ErrMasterEmpty) {
 			logger.Alert("配置项[master]为空,部分功能无法使用")
 		} else {
 			return fmt.Errorf(err.Error()+"，当前回调地址:%v", options.Game.Notify)

@@ -1,8 +1,10 @@
-package share
+package errors
 
 import (
 	"github.com/hwcer/cosgo/values"
 )
+
+var Success = values.Errorf(200, "success") //成功
 
 var (
 	ErrLogin            = values.Errorf(1, "not login")         //请重新登录
@@ -14,14 +16,13 @@ var (
 	ErrRoleNotExist     = values.Errorf(10, "role not exist")     // 角色不存在
 	ErrLoginWaiting     = values.Errorf(11, "Wait a moment")      //正在释放数据,需要等一会再登录
 	ErrNeedResetSession = values.Errorf(12, "need reset session") //跨天需要特殊处理
-	
+
 	ErrLoginAgain    = values.Errorf(101, "please login again") //需要重新登录
 	ErrLoginDisabled = values.Errorf(102, "disabled")           //账号禁用
 	ErrDataNotExists = values.Errorf(104, "data not exists")    //数据库数据不存在
 	ErrPlayerMax     = values.Errorf(105, "player max")         //房间已满
 	ErrDataExists    = values.Errorf(106, "data exists")        //数据已经存在
 
-	ErrConfigEmpty   = values.Errorf(200, "CS empty")        //配置不存在
 	ErrItemNotEnough = values.Errorf(202, "item not enough") //道具,材料不足
 	ErrTargetLimit   = values.Errorf(203, "target limit")    //任务目标未达成
 	ErrPreTaskLimit  = values.Errorf(204, "pre task limit")  //前置任务没完成

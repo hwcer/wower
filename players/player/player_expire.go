@@ -3,8 +3,8 @@ package player
 import (
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/values"
+	"github.com/hwcer/wower/errors"
 	"github.com/hwcer/wower/options"
-	"github.com/hwcer/wower/share"
 )
 
 const (
@@ -98,14 +98,14 @@ func (this *Expire) Verify(args []int64) (t [2]int64, err error) {
 	if t[0], err = this.Start(int32(args[0]), args[1]); err != nil {
 		return
 	} else if t[0] > now {
-		err = share.ErrActiveDisable
+		err = errors.ErrActiveDisable
 		return
 	}
 	if t[1], err = this.Finish(int32(args[0]), args[2]); err != nil {
 		return
 	}
 	if t[1] > 0 && t[1] < now {
-		err = share.ErrActiveExpired
+		err = errors.ErrActiveExpired
 		return
 	}
 	return

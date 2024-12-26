@@ -4,6 +4,7 @@ import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/request"
 	"github.com/hwcer/cosgo/values"
+	"github.com/hwcer/wower/errors"
 	"github.com/hwcer/wower/options"
 	"strings"
 	"sync"
@@ -59,7 +60,7 @@ func (m *master) OAuth() *request.OAuth {
 
 func (m *master) Post(api MasterApiType, args interface{}, reply interface{}) (err error) {
 	if options.Options.Master == "" {
-		return ErrMasterEmpty
+		return errors.ErrMasterEmpty
 	}
 	url := options.Options.Master
 	if strings.HasSuffix(url, "/") {

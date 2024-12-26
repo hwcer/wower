@@ -1,12 +1,11 @@
 package model
 
 import (
-	"errors"
 	"fmt"
 	"github.com/hwcer/updater"
 	"github.com/hwcer/updater/dataset"
+	"github.com/hwcer/wower/errors"
 	"github.com/hwcer/wower/options"
-	"github.com/hwcer/wower/share"
 )
 
 // RoleFieldTable ROLE 字段名和数字ID映射
@@ -136,7 +135,7 @@ func (r *Role) Getter(u *updater.Updater, data *dataset.Document, keys []string)
 	if tx = tx.Find(v, uid); tx.Error != nil {
 		return tx.Error
 	} else if tx.RowsAffected == 0 {
-		return share.ErrRoleNotExist
+		return errors.ErrRoleNotExist
 	}
 	data.Reset(v)
 	return nil

@@ -5,6 +5,7 @@ import (
 	"github.com/hwcer/cosgo/registry"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/values"
+	"github.com/hwcer/wower/errors"
 	"github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/players"
 	"github.com/hwcer/wower/players/player"
@@ -76,13 +77,13 @@ func verify(c *Context, handle func() error) (err error) {
 
 	err = players.Try(uid, func(p *player.Player) error {
 		if p == nil {
-			return share.ErrLogin
+			return errors.ErrLogin
 		}
 		c.Player = p
 		c.Player.KeepAlive(c.Unix())
 
 		if update := c.Player.Role.Val("update"); update < times.Daily(0).Unix() && c.ServiceMethod() != ServiceMethodRoleRenewal {
-			return share.ErrNeedResetSession
+			return errors.ErrNeedResetSession
 		}
 		//尝试重新上线
 		meta := c.Metadata()
@@ -91,7 +92,7 @@ func verify(c *Context, handle func() error) (err error) {
 				return e
 			}
 		} else if session := meta[options.ServicePlayerSession]; session != p.Session {
-			return share.ErrReplaced
+			return errors.ErrReplaced
 		}
 
 		return handle()

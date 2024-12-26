@@ -4,10 +4,10 @@ import (
 	"github.com/hwcer/cosgo/logger"
 	"github.com/hwcer/cosgo/times"
 	"github.com/hwcer/cosgo/values"
+	"github.com/hwcer/wower/errors"
 	opt "github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/players/options"
 	"github.com/hwcer/wower/players/player"
-	"github.com/hwcer/wower/share"
 	"golang.org/x/net/context"
 	"runtime/debug"
 	"sort"
@@ -21,14 +21,14 @@ func Connect(p *player.Player, meta map[string]string) error {
 	session := meta[opt.ServicePlayerSession]
 
 	if status == player.StatusLocked || status == player.StatusRelease {
-		return share.ErrLoginWaiting
+		return errors.ErrLoginWaiting
 	}
 	if status == player.StatusConnected {
 		if session != "" && p.Session == session {
 			return values.Errorf(0, "Please do not log in again")
 		}
 	} else if !atomic.CompareAndSwapInt32(&p.Status, status, player.StatusConnected) {
-		return share.ErrLoginWaiting
+		return errors.ErrLoginWaiting
 	}
 	if status == player.StatusNone || status == player.StatusRecycling {
 		atomic.AddInt32(&playersOnline, 1)
