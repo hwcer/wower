@@ -10,11 +10,9 @@ import (
 	"time"
 )
 
-type TaskStatus int8
-
 const (
-	TaskStatusNone  TaskStatus = 0 //无
-	TaskStatusStart TaskStatus = 1 //已经完成
+	TaskValueNone     int8 = 0 //进行中
+	TaskValueComplete int8 = 1 //已经完成
 )
 
 func init() {
@@ -23,9 +21,10 @@ func init() {
 
 type Task struct {
 	Model  `bson:"inline"`
-	Value  int32      `bson:"val" json:"val"`        //任务进度,仅仅即时任务有效
-	Expire int64      `bson:"expire" json:"expire"`  //任务过期时间,仅仅针对已完成的每日，每周任务
-	Status TaskStatus `bson:"status" json:"status" ` //0-进行中，1-完成
+	Value  int8  `bson:"val" json:"val"`  //0-进行中，1-完成
+	Expire int64 `bson:"ttl" json:"ttl"`  //任务过期时间,仅仅针对已完成的每日，每周任务
+	Target int64 `bson:"tar" json:"tar" ` //任务进度，仅仅即时任务记录
+
 }
 
 func (this *Task) Get(k string) (any, bool) {
@@ -34,8 +33,8 @@ func (this *Task) Get(k string) (any, bool) {
 		return this.Value, true
 	case "Expire", "expire":
 		return this.Expire, true
-	case "Status", "status":
-		return this.Status, true
+	case "Target", "target":
+		return this.Target, true
 	default:
 		return this.Model.Get(k)
 	}
@@ -45,11 +44,11 @@ func (this *Task) Get(k string) (any, bool) {
 func (this *Task) Set(k string, v any) (any, bool) {
 	switch k {
 	case "Value", "val":
-		this.Value = dataset.ParseInt32(v)
+		this.Value = int8(dataset.ParseInt32(v))
 	case "Expire", "expire":
 		this.Expire = dataset.ParseInt64(v)
-	case "Status", "status":
-		this.Status = v.(TaskStatus)
+	case "Target", "target":
+		this.Target = dataset.ParseInt64(v)
 	default:
 		return this.Model.Set(k, v)
 	}
@@ -60,12 +59,14 @@ func (this *Task) IType(int32) int32 {
 	return options.ITypeTask
 }
 
-func (this *Task) MayRefresh(now int64) {
+func (this *Task) MayRefresh(now int64) (r bool) {
 	if this.Expire > 0 && this.Expire <= now {
-		this.Value = 0
+		r = true
+		this.Value = TaskValueNone
 		this.Expire = now
-		this.Status = TaskStatusNone
+		this.Target = 0
 	}
+	return
 }
 
 // ----------------- 作为MODEL方法--------------------
@@ -86,11 +87,12 @@ func (this *Task) Getter(u *updater.Updater, coll *dataset.Collection, keys []st
 		return errors.New("Task.Getter uid not found")
 	}
 	tx := DB.Where("uid = ?", uid)
-	if len(keys) > 0 {
-		tx = tx.Where("_id IN ?", keys)
-	} else {
-		tx = tx.Where("status = ?", TaskStatusNone)
-	}
+	//if len(keys) > 0 {
+	//	tx = tx.Where("_id IN ?", keys)
+	//}
+	//else {
+	//	tx = tx.Where("status = ?", TaskStatusNone)
+	//}
 	tx = tx.Omit("uid", "update")
 	var rows []*Task
 	if tx = tx.Find(&rows); tx.Error != nil {

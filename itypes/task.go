@@ -29,7 +29,6 @@ func taskCreator(u *updater.Updater, iid int32, val int64) (any, error) {
 	i := &model.Task{}
 	i.Init(u, iid)
 	i.OID, _ = Shop.ObjectId(u, iid)
-	i.Value = int32(val)
 	return i, nil
 }
 

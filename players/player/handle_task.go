@@ -8,6 +8,7 @@ import (
 	"github.com/hwcer/wower/options"
 	"github.com/hwcer/wower/players/emitter"
 	"github.com/hwcer/wower/players/verify"
+	"time"
 )
 
 const taskListenerKey = "task_listener_key"
@@ -22,8 +23,10 @@ func onTaskLoader(u *updater.Updater) {
 		return
 	}
 	p := u.Process.Get(ProcessName).(*Player)
+	now := time.Now().Unix()
 	p.Task.Range(func(id string, data *model.Task) bool {
-		if data.Status == model.TaskStatusStart {
+		data.MayRefresh(now)
+		if data.Value == model.TaskValueNone {
 			p.Task.listener(data.IID)
 		}
 		return true

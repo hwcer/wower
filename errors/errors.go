@@ -30,4 +30,5 @@ var (
 	ErrArgEmpty      = values.Errorf(400, "args empty")     //参数不能为空
 	ErrActiveDisable = values.Errorf(401, "active disable") //活动未开始
 	ErrActiveExpired = values.Errorf(402, "active expired") //活动已经结束
+	ErrConfigEmpty   = values.Errorf(403, "config empty")
 )
